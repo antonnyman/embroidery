@@ -1,7 +1,16 @@
 {
   "name": "embroidery",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "lib/index.js",
   "author": "Anton Nyman <anton@antonnyman.se>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "test": "npx jest",
+    "test:debug": "node --inspect node_modules/.bin/jest --runInBand"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^7.19.0",
+    "@testing-library/jest-dom": "^5.11.0",
+    "jest": "^26.1.0"
+  }
 }
