@@ -1,0 +1,7 @@
+{
+  "name": "embroidery",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Anton Nyman <anton@antonnyman.se>",
+  "license": "MIT"
+}
