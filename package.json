@@ -8,7 +8,6 @@
   "author": "Anton Nyman <anton@antonnyman.se>",
   "license": "MIT",
   "scripts": {
-    "test": "npx jest",
     "test:debug": "node --inspect node_modules/.bin/jest --runInBand"
   },
   "devDependencies": {
