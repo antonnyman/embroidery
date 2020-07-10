@@ -2,6 +2,9 @@
   "name": "embroidery",
   "version": "0.0.1",
   "main": "dist/index.js",
+  "files": [
+    "dist/index.js"
+  ],
   "author": "Anton Nyman <anton@antonnyman.se>",
   "license": "MIT",
   "scripts": {
