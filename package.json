@@ -1,18 +1,19 @@
 {
   "name": "embroidery",
   "version": "0.0.3",
-  "main": "dist/index.js",
-  "files": [
-    "dist/index.js"
-  ],
+  "main": "dist/embroidery.js",
+  "umd:main": "dist/embroidery.umd.js",
+  "module": "dist/embroidery.m.js",
+  "esmodule": "dist/embroidery.modern.js",
+  "types": "dist/embroidery.d.ts",
+  "source": "lib/index.ts",
   "author": "Anton Nyman <anton@antonnyman.se>",
   "license": "MIT",
   "scripts": {
-    "test:debug": "node --inspect node_modules/.bin/jest --runInBand"
+    "build": "microbundle build",
+    "watch": "microbundle watch"
   },
   "devDependencies": {
-    "@testing-library/dom": "^7.19.0",
-    "@testing-library/jest-dom": "^5.11.0",
-    "jest": "^26.1.0"
+    "microbundle": "^0.12.3"
   }
 }
