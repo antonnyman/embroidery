@@ -30,7 +30,7 @@ export default class Controller {
     if (
       this.context[this.dataAttr] &&
       this.context[this.dataAttr]['init'] &&
-      typeof this.context[this.dataAttr]['init'] === 'function' &&
+      typeof this.context[this.dataAttr]['init'] === 'function'
     ) {
       this.context[this.dataAttr]['init'](this.cache['data-target'])
     }

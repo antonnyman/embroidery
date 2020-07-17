@@ -7,7 +7,6 @@ export default class Controller {
     private actionElements;
     private cache;
     private context;
-    private initCalled;
     constructor(element: Element, context: Context);
     updateCache(elements: NodeList, attr: string): void;
     create(): void;
