@@ -57,7 +57,9 @@ Add a _partial_ (async external html). This is good for inserting remote fragmen
 <div data-partial="/endpoint-that-returns-html"></div>
 ```
 
-### Good to know
+### Actions
+
+#### Default actions
 
 Some elements have default actions, which means you don't have to specify click, submit etc.
 For example:
@@ -77,3 +79,13 @@ For example:
 | input    | 'input'  |
 | select   | 'change' |
 | textarea | 'input'  |
+
+#### Chaining actions
+
+If you want to have multiple actions you can separate them with a blank space.
+
+```html
+<div data-controller="manyActions">
+  <div data-action="mouseover->doThis mouseout->doThat">Do this or that</div>
+</div>
+```
