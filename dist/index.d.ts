@@ -9,7 +9,7 @@ export declare class Embroidery {
     static start(): Embroidery;
     constructor();
     start(): Promise<void>;
-    register(controller: any): void;
+    register(controller: Element): void;
     discover(callback: Callback, type: Data): void;
     updateCache(element: any, type: any): void;
     initialize(e: Element): void;

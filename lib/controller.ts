@@ -26,7 +26,7 @@ export default class Controller {
     this.updateCache(this.targetElements, 'data-target')
     this.updateCache(this.actionElements, 'data-action')
 
-    this.invoke()
+    this.create()
 
     if (
       this.context[this.dataAttr] &&
@@ -48,7 +48,7 @@ export default class Controller {
     })
   }
 
-  invoke() {
+  create() {
     this.actionElements.forEach((actionElement: Element) => {
       const actions = actionElement.getAttribute('data-action')
 

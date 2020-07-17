@@ -10,6 +10,6 @@ export default class Controller {
     private initCalled;
     constructor(element: Element, context: Context);
     updateCache(elements: NodeList, attr: string): void;
-    invoke(): void;
+    create(): void;
 }
 export {};

@@ -1,4 +1,5 @@
 import Controller from './controller'
+import Partial from './partial'
 import { domReady } from './utils'
 
 enum Data {
@@ -41,10 +42,18 @@ export class Embroidery {
     this.discover((el) => {
       this.initialize(el)
     }, Data.Controller)
+
+    this.discover((el) => {
+      this.initialize(el)
+    }, Data.Partial)
+
+    this.listenForNewUninitializedControllersAtRuntime((el) => {
+      this.initialize(el)
+    })
   }
 
-  register(controller) {
-    this.context = { ...controller }
+  register(controller: Element) {
+    this.context = { ...this.context, ...controller }
   }
 
   discover(callback: Callback, type: Data) {
@@ -69,10 +78,11 @@ export class Embroidery {
 
             case DataAttribute.Partial:
               this.updateCache(element, DataAttribute.Partial)
-            // return new Partial(ele>ment)
+              return new Partial(element)
+
             default:
               throw new Error(
-                'Element is not a specified data type, like Controller or Partial'
+                'Element is not a specified data type, like controller or partial. Did you forget to register it?'
               )
           }
         })
@@ -95,7 +105,7 @@ export class Embroidery {
     return Array.from(
       (parentElement || document).querySelectorAll(Data.Controller)
     )
-      .filter((element) => !this.cache[Data.Controller].includes(element))
+      .filter((element) => !this.cache[Data.Controller]?.includes(element))
       .map((element) => callback(element))
   }
 
@@ -110,7 +120,7 @@ export class Embroidery {
             if (node?.parentElement?.closest(Data.Controller)) return
 
             this.discoverUninitializedControllers((el: Element) => {
-              this.initialize(el)
+              callback(el)
             }, node.parentElement)
           })
         }

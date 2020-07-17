@@ -3,16 +3,17 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Stimulus: <%= currentPage.title %> Example</title>
+  <title>Embroidery: <%= currentPage.title %> Example</title>
   <link rel="stylesheet" href="/main.css">
   <script src="/main.js" defer></script>
 </head>
 
 <body>
+  <header>
+    <h1 class="title">Embroidery</h1> <h3>Examples</h3>
+  </header>
   <main>
-    <div class="sidebar">
-      <img src="/logo.svg" class="logo" alt="Stimulus logo" width="75" height="75">
-
+    <aside>
       <ul class="nav">
         <% pages.forEach(page => { %>
           <li>
@@ -22,6 +23,6 @@
           </li>
           <% }) %>
       </ul>
-    </div>
+    </aside>
 
     <div class="container">

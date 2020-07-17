@@ -1,4 +1,3 @@
-const fs = require('fs')
 const path = require('path')
 const express = require('express')
 const webpack = require('webpack')
@@ -28,8 +27,14 @@ app.get('/', (req, res) => {
   res.redirect(pages[0].path)
 })
 
-app.get('/uptime', (req, res, next) => {
-  res.send(process.uptime().toString())
+app.get('/emoji', (req, res, next) => {
+  res.send('🧵')
+})
+
+app.get('/dynamic', (req, res) => {
+  res.send(
+    '<div data-controller="dynamic"><div data-target="dynTarget"></div></div>'
+  )
 })
 
 app.get('/:page', (req, res, next) => {
