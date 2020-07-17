@@ -58,36 +58,39 @@ export default class Controller {
 
       // Actions are separated by a blank space
       // Example: mouseover->dothis mouseout->dothat
-      actions.split(' ').map((action) => {
-        let event = null
-        let func = null
+      actions
+        .trim()
+        .split(' ')
+        .map((action) => {
+          let event = null
+          let func = null
 
-        // We can assume some common actions by their tagname
-        // For example button has the default action click
-        if (!action.includes('->')) {
-          const tagName = actionElement.tagName.toLowerCase()
-          event = defaultEventNames[tagName]
-          func = action
-        } else {
-          ;[event, func] = action.split('->')
-        }
+          // We can assume some common actions by their tagname
+          // For example button has the default action click
+          if (!action.includes('->')) {
+            const tagName = actionElement.tagName.toLowerCase()
+            event = defaultEventNames[tagName]
+            func = action
+          } else {
+            ;[event, func] = action.split('->')
+          }
 
-        if (!event) {
-          throw new Error(
-            `[Embroidery]: Missing event on ${actionElement}, for example click or change.`
-          )
-        }
+          if (!event) {
+            throw new Error(
+              `[Embroidery]: Missing event on ${actionElement}, for example click or change.`
+            )
+          }
 
-        if (!func) {
-          throw new Error(
-            `[Embroidery]: Missing function on ${actionElement}. Specify your function in the controller.`
-          )
-        }
-        actionElement.addEventListener(event, () => {
-          // Invoke function
-          this.context[this.dataAttr][func](this.cache['data-target'])
+          if (!func) {
+            throw new Error(
+              `[Embroidery]: Missing function on ${actionElement}. Specify your function in the controller.`
+            )
+          }
+          actionElement.addEventListener(event, () => {
+            // Invoke function
+            this.context[this.dataAttr][func](this.cache['data-target'])
+          })
         })
-      })
     })
   }
 }
