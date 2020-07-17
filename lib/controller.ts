@@ -15,7 +15,6 @@ export default class Controller {
   }
 
   private context: Context
-  private initCalled = false
 
   constructor(element: Element, context: Context) {
     this.context = context
@@ -32,10 +31,8 @@ export default class Controller {
       this.context[this.dataAttr] &&
       this.context[this.dataAttr]['init'] &&
       typeof this.context[this.dataAttr]['init'] === 'function' &&
-      !this.initCalled
     ) {
       this.context[this.dataAttr]['init'](this.cache['data-target'])
-      this.initCalled = true
     }
   }
 
