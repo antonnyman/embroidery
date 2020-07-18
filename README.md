@@ -7,7 +7,7 @@
 
 ## Install
 
-```js
+```sh
 yarn add embroidery
 or
 npm i embroidery
@@ -80,7 +80,7 @@ For example:
 | select   | 'change' |
 | textarea | 'input'  |
 
-#### Chaining actions
+#### Multiple actions
 
 If you want to have multiple actions you can separate them with a blank space.
 

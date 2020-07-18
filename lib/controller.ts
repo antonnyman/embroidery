@@ -14,10 +14,7 @@ export default class Controller {
     'data-action': [],
   }
 
-  private context: Context
-
-  constructor(element: Element, context: Context) {
-    this.context = context
+  constructor(element: Element, private readonly context: Context) {
     this.dataAttr = element.getAttribute('data-controller')
     this.targetElements = element.querySelectorAll('[data-target]')
     this.actionElements = element.querySelectorAll('[data-action]')
@@ -27,12 +24,8 @@ export default class Controller {
 
     this.create()
 
-    if (
-      this.context[this.dataAttr] &&
-      this.context[this.dataAttr]['init'] &&
-      typeof this.context[this.dataAttr]['init'] === 'function'
-    ) {
-      this.context[this.dataAttr]['init'](this.cache['data-target'])
+    if (typeof this.context[this.dataAttr]?.init === 'function') {
+       this.context[this.dataAttr].init(this.cache['data-target'])
     }
   }
 
@@ -50,7 +43,7 @@ export default class Controller {
       const actions = actionElement.getAttribute('data-action')
 
       // Make sure the attribute has an action
-      if (!actions || actions === '') {
+      if (!actions) {
         throw new Error(
           '[Embroidery]: An action attribute was specified without an action. Is the action an empty string or missing?'
         )
@@ -60,7 +53,7 @@ export default class Controller {
       // Example: mouseover->dothis mouseout->dothat
       actions
         .trim()
-        .split(' ')
+        .split(/\s+/)
         .map((action) => {
           let event = null
           let func = null

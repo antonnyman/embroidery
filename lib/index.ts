@@ -108,7 +108,7 @@ export class Embroidery {
             // Ignore non-elements
             if (node.nodeType !== 1) return
             // Don't listen for changes that happen in discovered controllers
-            if (node?.parentElement?.closest(Data.Controller)) return
+            if (node.parentElement?.closest(Data.Controller)) return
 
             this.discoverUninitializedControllers((el: Element) => {
               callback(el)
