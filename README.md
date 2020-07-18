@@ -7,7 +7,7 @@
 
 ## Install
 
-```js
+```sh
 yarn add embroidery
 or
 npm i embroidery
