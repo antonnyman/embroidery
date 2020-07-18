@@ -1,0 +1,31 @@
+<% include layout/head %>
+
+<p data-controller="clipboard">
+  <input
+    data-target="source"
+    class="clipboard-source"
+    type="text"
+    value="https://stimulusjs.org"
+    readonly
+  />
+  <button data-action="click->copy">Copy</button>
+</p>
+
+<p data-controller="clipboard">
+  <input
+    data-target="source"
+    class="clipboard-source"
+    type="text"
+    value="https://basecamp.com"
+    readonly
+  />
+  <button data-action="copy">Copy</button>
+</p>
+
+<br />
+
+<p>
+  <textarea placeholder="Paste here…"></textarea>
+</p>
+
+<% include layout/tail %>
