@@ -12,7 +12,6 @@ export default class Partial {
 
   async create() {
     const result = await fetch(this.dataAttr, {
-      method: 'GET',
       headers: { 'Content-Type': 'text/html' },
     })
 

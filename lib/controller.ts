@@ -36,7 +36,7 @@ export default class Controller {
     }
   }
 
-  updateCache(elements: NodeList, attr: string) {
+  private updateCache(elements: NodeList, attr: string) {
     elements.forEach((element: Element) => {
       this.cache = {
         ...this.cache,
@@ -45,7 +45,7 @@ export default class Controller {
     })
   }
 
-  create() {
+  private create() {
     this.actionElements.forEach((actionElement: Element) => {
       const actions = actionElement.getAttribute('data-action')
 

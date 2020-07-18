@@ -33,21 +33,19 @@ export class Embroidery {
     return app
   }
 
-  constructor() {}
-
   async start() {
     await domReady()
     console.info('Embroidery started.')
 
-    this.discover((el) => {
+    this.discover((el: HTMLElement) => {
       this.initialize(el)
     }, Data.Controller)
 
-    this.discover((el) => {
+    this.discover((el: HTMLElement) => {
       this.initialize(el)
     }, Data.Partial)
 
-    this.listenForNewUninitializedControllersAtRuntime((el) => {
+    this.listenForNewUninitializedControllersAtRuntime((el: HTMLElement) => {
       this.initialize(el)
     })
   }
@@ -66,31 +64,24 @@ export class Embroidery {
     this.cache = { ...this.cache, [type]: [...this.cache[type], element] }
   }
 
-  initialize(e: Element) {
-    const element = e as HTMLElement
+  initialize(element: HTMLElement) {
     if (element.dataset) {
-      try {
-        Object.keys(element.dataset).forEach((el) => {
-          switch (el) {
-            case DataAttribute.Controller:
-              this.updateCache(element, DataAttribute.Controller)
-              return new Controller(element, this.context)
+      Object.keys(element.dataset).forEach((el) => {
+        switch (el) {
+          case DataAttribute.Controller:
+            this.updateCache(element, DataAttribute.Controller)
+            return new Controller(element, this.context)
 
-            case DataAttribute.Partial:
-              this.updateCache(element, DataAttribute.Partial)
-              return new Partial(element)
+          case DataAttribute.Partial:
+            this.updateCache(element, DataAttribute.Partial)
+            return new Partial(element)
 
-            default:
-              throw new Error(
-                'Element is not a specified data type, like controller or partial. Did you forget to register it?'
-              )
-          }
-        })
-      } catch (error) {
-        setTimeout(() => {
-          throw error
-        }, 0)
-      }
+          default:
+            throw new Error(
+              'Element is not a specified data type, like controller or partial. Did you forget to register it?'
+            )
+        }
+      })
     } else {
       console.error(
         `An element ${element} was picked up but could not be initialized`
@@ -110,7 +101,7 @@ export class Embroidery {
   }
 
   listenForNewUninitializedControllersAtRuntime(callback: Callback) {
-    return new MutationObserver((mutations) =>
+    new MutationObserver((mutations) =>
       mutations.map(({ addedNodes }) => {
         if (addedNodes.length > 0) {
           addedNodes.forEach((node) => {
