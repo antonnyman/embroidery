@@ -14,6 +14,7 @@
     "watch": "microbundle watch"
   },
   "devDependencies": {
+    "lodash.groupby": "^4.6.0",
     "microbundle": "^0.12.3"
   }
 }

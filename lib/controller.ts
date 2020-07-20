@@ -1,17 +1,22 @@
+import groupBy from 'lodash.groupby'
 import { defaultEventNames } from './utils'
 
 type Context = {
-  [key: string]: Function
+  [key: string]: any
 }
 
 export default class Controller {
   private dataAttr: string
   private targetElements: NodeList
   private actionElements: NodeList
+  private targetsElements: NodeList
+  private actionsElements: NodeList
 
   private cache = {
-    'data-target': [],
-    'data-action': [],
+    'data-target': {},
+    'data-action': {},
+    'data-targets': {},
+    'data-actions': {},
   }
 
   constructor(element: Element, private readonly context: Context) {
@@ -19,21 +24,41 @@ export default class Controller {
     this.targetElements = element.querySelectorAll('[data-target]')
     this.actionElements = element.querySelectorAll('[data-action]')
 
+    this.targetsElements = element.querySelectorAll('[data-targets]')
+    this.actionsElements = element.querySelectorAll('[data-actions]')
+
     this.updateCache(this.targetElements, 'data-target')
     this.updateCache(this.actionElements, 'data-action')
+    this.updateCache(this.targetsElements, 'data-targets')
+    this.updateCache(this.actionsElements, 'data-actions')
 
     this.create()
 
-    if (typeof this.context[this.dataAttr]?.init === 'function') {
-       this.context[this.dataAttr].init(this.cache['data-target'])
+    if (typeof this.context[this.dataAttr]['init'] === 'function') {
+      this.context[this.dataAttr].init(this.cache['data-target'])
     }
   }
 
+  private getKey(el, element, attr) {
+    return el.length > 0
+      ? `${element.getAttribute(attr).slice(0, -2)}Targets`
+      : element.getAttribute(attr)
+  }
+
   private updateCache(elements: NodeList, attr: string) {
-    elements.forEach((element: Element) => {
+    let el = []
+    elements?.forEach((element: HTMLElement) => {
+      const target = element.getAttribute('data-target')
+
+      if (target?.endsWith('[]')) {
+        el = [...el, element]
+      }
       this.cache = {
         ...this.cache,
-        [attr]: { ...this.cache[attr], [element.getAttribute(attr)]: element },
+        [attr]: {
+          ...this.cache[attr],
+          [this.getKey(el, element, attr)]: el.length > 0 ? el : element,
+        },
       }
     })
   }

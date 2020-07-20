@@ -1,14 +1,17 @@
 declare type Context = {
-    [key: string]: Function;
+    [key: string]: any;
 };
 export default class Controller {
+    private readonly context;
     private dataAttr;
     private targetElements;
     private actionElements;
+    private targetsElements;
+    private actionsElements;
     private cache;
-    private context;
     constructor(element: Element, context: Context);
-    updateCache(elements: NodeList, attr: string): void;
-    create(): void;
+    private getKey;
+    private updateCache;
+    private create;
 }
 export {};

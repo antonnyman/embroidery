@@ -89,3 +89,28 @@ If you want to have multiple actions you can separate them with a blank space.
   <div data-action="mouseover->doThis mouseout->doThat">Do this or that</div>
 </div>
 ```
+
+### Targets
+
+#### Multiple targets
+
+If you have multiple targets you need to add `[]` to access them as an array in your controller. The array will be appended with `<name>Targets`.
+
+```html
+<div>
+  <div data-target="hello[]">Hello to you</div>
+  <div data-target="hello[]">Hello to me</div>
+  <div data-target="hello[]">Hello to everyone</div>
+</div>
+```
+
+```js
+// hello-controller.js
+const helloController = {
+  init({ helloTargets }) {
+    helloTargets.forEach((target) => {
+      //...
+    })
+  },
+}
+```
