@@ -11,7 +11,8 @@
   "license": "MIT",
   "scripts": {
     "build": "microbundle build",
-    "watch": "microbundle watch"
+    "watch": "microbundle watch",
+    "release": "npx np --any-branch"
   },
   "devDependencies": {
     "lodash.groupby": "^4.6.0",
