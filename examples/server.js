@@ -21,6 +21,7 @@ const pages = [
   { path: '/clipboard', title: 'Clipboard' },
   { path: '/slideshow', title: 'Slideshow' },
   { path: '/partial', title: 'Partial' },
+  { path: '/runtime', title: 'Runtime' },
 ]
 
 app.get('/', (req, res) => {

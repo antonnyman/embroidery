@@ -15,24 +15,26 @@ export default class Controller {
   private cache = {
     'data-target': {},
     'data-action': {},
-    'data-targets': {},
-    'data-actions': {},
   }
 
-  constructor(element: Element, private readonly context: Context) {
-    this.dataAttr = element.getAttribute('data-controller')
-    this.targetElements = element.querySelectorAll('[data-target]')
-    this.actionElements = element.querySelectorAll('[data-action]')
+  constructor(
+    private readonly element: Element,
+    private readonly context: Context
+  ) {
+    this.dataAttr = this.element.getAttribute('data-controller')
+    this.targetElements = this.element.querySelectorAll('[data-target]')
+    this.actionElements = this.element.querySelectorAll('[data-action]')
 
-    this.targetsElements = element.querySelectorAll('[data-targets]')
-    this.actionsElements = element.querySelectorAll('[data-actions]')
+    // this.targetsElements = this.element.querySelectorAll('[data-targets]')
+    // this.actionsElements = this.element.querySelectorAll('[data-actions]')
 
     this.updateCache(this.targetElements, 'data-target')
     this.updateCache(this.actionElements, 'data-action')
-    this.updateCache(this.targetsElements, 'data-targets')
-    this.updateCache(this.actionsElements, 'data-actions')
+    // this.updateCache(this.targetsElements, 'data-targets')
+    // this.updateCache(this.actionsElements, 'data-actions')
 
     this.create()
+    this.listenForRuntimeChanges(null)
 
     if (typeof this.context[this.dataAttr]['init'] === 'function') {
       this.context[this.dataAttr].init(this.cache['data-target'])
@@ -51,7 +53,9 @@ export default class Controller {
       const target = element.getAttribute('data-target')
 
       if (target?.endsWith('[]')) {
-        el = [...el, element]
+        el = [element]
+        const key = this.getKey(el, element, attr)
+        el = [...this.cache[attr][key], element].filter(Boolean)
       }
       this.cache = {
         ...this.cache,
@@ -61,6 +65,7 @@ export default class Controller {
         },
       }
     })
+    // console.log(this.cache)
   }
 
   private create() {
@@ -109,6 +114,32 @@ export default class Controller {
             this.context[this.dataAttr][func](this.cache['data-target'])
           })
         })
+    })
+  }
+
+  private listenForRuntimeChanges(callback) {
+    new MutationObserver((mutations) =>
+      mutations.map(({ addedNodes }) => {
+        if (addedNodes.length > 0) {
+          let targets = []
+          addedNodes.forEach((node) => {
+            // Ignore non-elements
+            if (node.nodeType !== 1) return
+            const dataset = (node as HTMLElement)?.dataset
+
+            if (Object.keys(dataset)[0] === 'target') {
+              //@ts-ignore
+              targets.push(node)
+            }
+            // this.updateCache(...this.elements)
+            this.updateCache(targets as any, 'data-target')
+          })
+        }
+      })
+    ).observe(this.element, {
+      childList: true,
+      attributes: true,
+      subtree: true,
     })
   }
 }
