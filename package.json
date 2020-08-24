@@ -12,7 +12,7 @@
   "scripts": {
     "build": "microbundle build",
     "watch": "microbundle watch",
-    "release": "yarn build && npx np --any-branch"
+    "release": "yarn build && npx np --any-branch --no-tests"
   },
   "devDependencies": {
     "lodash.groupby": "^4.6.0",
