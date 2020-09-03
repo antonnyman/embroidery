@@ -10,12 +10,11 @@
   "author": "Anton Nyman <anton@antonnyman.se>",
   "license": "MIT",
   "scripts": {
-    "build": "microbundle build",
+    "build": "microbundle build --compress",
     "watch": "microbundle watch",
     "release": "yarn build && npx np --any-branch --no-tests"
   },
   "devDependencies": {
-    "lodash.groupby": "^4.6.0",
     "microbundle": "next"
   }
 }

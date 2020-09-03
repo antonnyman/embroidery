@@ -1,5 +1,6 @@
 export const runtime = {
   init(all) {
+    console.log(all)
     const { form } = all
     form.addEventListener('submit', (e) => e.preventDefault())
   },

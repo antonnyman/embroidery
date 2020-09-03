@@ -1,4 +1,3 @@
-import groupBy from 'lodash.groupby'
 import { defaultEventNames } from './utils'
 
 type Context = {
@@ -9,8 +8,6 @@ export default class Controller {
   private dataAttr: string
   private targetElements: NodeList
   private actionElements: NodeList
-  private targetsElements: NodeList
-  private actionsElements: NodeList
 
   private cache = {
     'data-target': {},
@@ -25,13 +22,8 @@ export default class Controller {
     this.targetElements = this.element.querySelectorAll('[data-target]')
     this.actionElements = this.element.querySelectorAll('[data-action]')
 
-    // this.targetsElements = this.element.querySelectorAll('[data-targets]')
-    // this.actionsElements = this.element.querySelectorAll('[data-actions]')
-
     this.updateCache(this.targetElements, 'data-target')
     this.updateCache(this.actionElements, 'data-action')
-    // this.updateCache(this.targetsElements, 'data-targets')
-    // this.updateCache(this.actionsElements, 'data-actions')
 
     this.create()
     this.listenForRuntimeChanges(null)
@@ -42,20 +34,25 @@ export default class Controller {
   }
 
   private getKey(el, element, attr) {
-    return el.length > 0
-      ? `${element.getAttribute(attr).slice(0, -2)}Targets`
-      : element.getAttribute(attr)
+    if (el.length > 0 && element.getAttribute(attr).endsWith('[]')) {
+      return `${element.getAttribute(attr).slice(0, -2)}Targets`
+    }
+    return element.getAttribute(attr)
   }
 
   private updateCache(elements: NodeList, attr: string) {
     let el = []
     elements?.forEach((element: HTMLElement) => {
       const target = element.getAttribute('data-target')
-
+      // If data-target has multiple targets we need to return them as an array
       if (target?.endsWith('[]')) {
         el = [element]
         const key = this.getKey(el, element, attr)
         el = [...this.cache[attr][key], element].filter(Boolean)
+        console.log(el)
+      } else {
+        // Reset el if data-target is a single target
+        el = []
       }
       this.cache = {
         ...this.cache,
@@ -65,7 +62,6 @@ export default class Controller {
         },
       }
     })
-    // console.log(this.cache)
   }
 
   private create() {
@@ -131,7 +127,6 @@ export default class Controller {
               //@ts-ignore
               targets.push(node)
             }
-            // this.updateCache(...this.elements)
             this.updateCache(targets as any, 'data-target')
           })
         }

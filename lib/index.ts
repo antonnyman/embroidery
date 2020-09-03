@@ -78,13 +78,13 @@ export class Embroidery {
 
           default:
             throw new Error(
-              'Element is not a specified data type, like controller or partial. Did you forget to register it?'
+              '[Embroidery]: Element is not a specified data type, like controller or partial. Did you forget to register it?'
             )
         }
       })
     } else {
       console.error(
-        `An element ${element} was picked up but could not be initialized`
+        `[Embroidery]: An element ${element} was picked up but could not be initialized`
       )
     }
   }

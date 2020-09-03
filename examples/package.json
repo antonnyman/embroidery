@@ -12,7 +12,10 @@
     "webpack-dev-middleware": "^3.7.0",
     "webpack": "^4.43.0"
   },
+  "devDependencies": {
+    "nodemon": "2.0.4"
+  },
   "scripts": {
-    "start": "node server.js"
+    "start": "nodemon server.js"
   }
 }
